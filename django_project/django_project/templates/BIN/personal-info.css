@@ -1,0 +1,10 @@
+body{
+    background-color: rgb(235, 219, 219);
+}
+
+.form{
+    background-color: linear gradiate(#00ff00, #0000ff, #ff0000);
+    border: 5px solid #fff;
+    width: 850px;
+    height: 100vh;
+}

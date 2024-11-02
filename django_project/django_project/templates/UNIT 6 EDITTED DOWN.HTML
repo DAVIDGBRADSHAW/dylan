@@ -1,0 +1,687 @@
+
+python manage.py startapp users
+INSTALLED APPS LIST
+in settings.py.
+
+The path to setting.py is django_project -> settings.py
+Open the file and the list should contain the following
+
+INSTALLED_APPS = [
+    "blog.apps.BlogConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+]
+
+name open apps.py in users -> app.py. You will see the following code.
+
+class UsersConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "users"
+
+4. Update the INSTALLED_APPS list with "users.apps.UsersConfig"
+
+
+INSTALLED_APPS = [
+    "blog.apps.BlogConfig",
+    "users.apps.UsersConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+]
+
+from django.contrib.auth.forms import UserCreationForm
+
+
+  def register(request):
+    form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+
+# Create your views here.
+def register(request):
+    form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+{% extends "blog/base.html" %}
+{% block content %}
+  
+{% endblock content %}
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        
+       </div>
+    {% endblock content %}
+
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+           
+        </form>
+       </div>
+    {% endblock content %}
+
+#
+#
+
+11. Add a Cross Site Request Forgery (CSRF) token. This is required by Django
+and adds protection from certain attacks. If you do not have it the form will not work.
+Once this is in place we can access the form variable passed in the context of this template.
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+        </form>
+       </div>
+    {% endblock content %}
+
+#
+#
+
+12. Add <fieldset class="form-group"> to group related elements in the form. 
+Also add <legend class="border-bottom mb-4"> to the form. class = is used for 
+styling.
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+            </fieldset>
+       </div>
+    {% endblock content %}
+
+#
+#
+
+13. Print out the form accessing the form variable.   
+Add {{ form.as_p }} in <fieldset> as_p will load the form with <p>
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+                {{ form.as_p }}
+            </fieldset>
+       </div>
+    {% endblock content %}
+
+#
+#
+
+14. Create a submit button with some Bootstrap styling.
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+                {{ form.as_p }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline" type="submit">Sign Up</button>
+            </div>
+        </form>
+       </div>
+    {% endblock content %}
+
+#
+#
+
+15. Create a section on the form for signing in if a user already has an account.
+    Also adding some BootStrap classes for styling.
+
+{% extends "blog/base.html" %}
+{% block content %}
+   <div class="content-section">
+    <form method="POST">  
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Join Here</legend>
+            {{ form.as_p }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div class="border-top pt-3"
+        <small class="text-muted">
+            Already hava an account? <a class="ml-2" href="#">Sign In</a>
+        </small>
+    </div>
+   </div>
+{% endblock content %}
+    
+
+Open urls.py from django_project.
+
+django_project
+├── __init__.py
+├── asgi.py
+├── settings.py
+├── urls.py
+└── wsgi.py
+
+Update urls.py to the following
+
+from django.contrib import admin
+from django.urls import path, include
+from users import views as user_views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('register/', user_views.register, name='register'),
+    path('',include('blog.urls')),
+]
+
+
+-> from users import views as user_views --> imports the views from user as user_views.
+It's possible import multiple views so as user_views is specifying the views.
+
+-> path('register/', user_views.register, name='register'), --> Defines the path
+so if a user goes to /register the users_views.register will be sent to the register view
+
+17. View the app in the browser. 
+
+-> python manage.py runserver
+-> Go to http://127.0.0.1:8000/register
+
+You will now see the form and all of the default details Django gives us out of the box.
+
+
+
+18. At this points if we try to use the form nothing will happen bar a redirect. 
+In our register view any request that comes in we are creating a blank form and 
+rendering it out to the template. With HTTP requests we have different options.
+Commonly used are POST and GET.
+
+If we get a POST request we can put a check in place to validate the form information
+and if we have a GET request leave the redirect.
+
+Update views.py in users -> views.py
+
+users
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── migrations
+    │   └── __init__.py
+    ├── models.py
+    ├── templates
+    │   └── users
+    │       └── register.html
+    ├── tests.py
+    └── views.py
+
+"""
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+"""
+
+#
+#
+
+19. Create a flash message. In views.py import messages with the following
+
+from django.contrib import messages
+
+
+There are multiple messages that can be called.
+
+messages.debug
+messages.info
+messages.success
+messages.warning
+messages.error
+
+For now we will us messages.success
+
+Update views.py to the following
+"""
+
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages #import for messages
+
+# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+"""
+
+if form.is_valid(): --> The nested if statement tests if the form is valid
+    username = form.cleaned_data.get('username') --> The validated form data will be in the form.cleaned_data dictionary.
+    messages.success(request, f'Account created for {username}!') --> This will display a message if the form data was valid. It will display only once
+
+Refer to https://docs.python.org/3/tutorial/inputoutput.html for f strings
+
+#
+#
+
+20. Redirect to the home page if the form is valid.
+
+-> import redirect
+-> Add return redirect('blog-home')
+
+Updated code for views.py
+
+"""
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blog-home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+"""
+#
+#
+
+21. Update blog -> templates -> blog -> base.html to show the messages.
+The code below will go inside  above the block content inside base.html
+
+<div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+
+For the code above...
+
+If Django sees flash messages sent into the template we can loop over the messages
+and print out each flash message. The <div> is using BootStrap Classes for styling.
+This part alert-{{ message.tags } is grabbing the message tag. {{ message }} will 
+display the message
+
+Updated base.html...
+
+
+    {% load static %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+        {% if title %}
+            <title>Django Blog - {{ title }}</title>
+        {% else %}
+            <title>Django Blog</title>
+        {% endif %}
+    </head>
+    <body>
+        <header class="site-header">
+          <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+              <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+                  <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                  <a class="nav-item nav-link" href="#">Login</a>
+                  <a class="nav-item nav-link" href="#">Register</a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main role="main" class="container">
+          <div class="row">
+            <div class="col-md-8">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-4">
+              <div class="content-section">
+                <h3>Our Sidebar</h3>
+                <p class='text-muted'>You can put any information here you'd like.
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">Latest Posts</li>
+                    <li class="list-group-item list-group-item-light">Announcements</li>
+                    <li class="list-group-item list-group-item-light">Calendars</li>
+                    <li class="list-group-item list-group-item-light">etc</li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+    </html>
+
+#
+#
+
+22. Run the develpoment server and create a new user account. If the account creation is successful
+you will be redireced back to the home page and see the message success display.
+
+->In the CLI run --> python manage.py runserver
+-> Navigate to --> http://127.0.0.1:8000/register/ 
+-> Create an account
+-> The flash message is only a one time alert. When you refresh the home page it will be removed.
+
+#
+#
+
+23. The form already has some built in validation checks. Show examples of trying to create a user 
+that already exists and invalid passwords.
+
+#
+#
+
+24. Stepping through the process of an invalid form.
+"""
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST) #New form object created with data from user
+        if form.is_valid(): #Checks take place on the form object. When false moves to else
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blog-home')
+    else:                                   
+        form = UserCreationForm() #Form object created
+    return render(request, 'users/register.html', {'form': form}) # register.html view returned with form object
+
+"""
+#
+#
+
+25. Create one or two users and check the admin page to see if they have been created.
+
+--> Go to http://127.0.0.1:8000/admin/auth/user/ --> after creating users
+
+#
+#
+
+26. Add an new email field to the UserCreationForm. To this we need to create a new file in
+our users application directory. users -> forms.py 
+
+users
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── forms.py
+    ├── migrations
+    │   ├── __init__.py
+    ├── models.py
+    ├── templates
+    │   └── users
+    │       └── register.html
+    ├── tests.py
+    └── views.py
+
+
+#
+#
+
+27. Inside forms.py import the following
+"""
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm #Inheritance Relationship
+
+"""
+
+#
+#
+
+28. Create two classes. UserRegistrationForm and Meta. forms.py updated...
+"""
+
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+"""
+-> class UserRegisterForm(UserCreationForm): --> Inheritance Relationship
+    email = forms.EmailField() --> Add additional email field to form. Default requires email to true.
+
+
+-> class Meta: --> This class gives a nested namespace for configurations and keeps them all in one place.
+    model = User --> Specify the model that the form interacts with. The model is User.
+    fields = ['username', 'email', 'password1', 'password2'] --> These are the fields shown on the form and also the order.
+
+#
+#
+
+29. Now we can use the UserRegiser form instead of the UserCreationFrom in our view.
+
+Currently the register view has the following code...
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blog-home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+Update the code in views.py to the following...
+"""
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserRegisterForm  #Import added
+
+# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST) #UserRegisterForm instead of UserCreationForm
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blog-home')  
+    else:
+        form = UserRegisterForm() #UserRegisterForm instead of UserCreationForm
+    return render(request, 'users/register.html', {'form': form})
+"""
+
+#
+#
+
+30. Update the styling of the form. We could add Bootstrap classes to forms.py but this is mixing the presentation layer with
+the back-end logic. A better approach is to use a third party Django app named crispy forms. This allows you
+to use some simple tags for styling. crispy forms works with multiple CSS frameworks.
+
+Install crispyforms
+--> pip install django-crispy-forms
+--> pip install crispy-bootstrap5
+
+At this point we need to tell Django that this is an installed app.
+
+Refer to https://django-crispy-forms.readthedocs.io/en/latest/
+
+#
+#
+
+31. Open settings.py from django_project
+
+django_project
+│  ├── __init__.py
+│  ├── asgi.py
+│  ├── settings.py
+│  ├── urls.py
+│  └── wsgi.py
+
+Update the INSTALLED APPS list to the following...
+"""
+
+INSTALLED_APPS = [
+    "blog.apps.BlogConfig",
+    "users.apps.UsersConfig",
+    "crispy_forms", #Updated here
+    "crispy_bootstrap5", #Updated here
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+]
+
+#At the bottom of settings.py specify the version of Bootstrap you want crispy forms to use.
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+"""
+
+#
+#
+
+32. Load crispy forms into the register.html template.
+
+Updated register.html below
+
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %} <!-- Updated here to load crispy forms -->
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                {{ form|crispy }} <!-- Updated to load the form and let crispy take care of the formmating -->
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
+
+#
+#
+
+33. Run development server and reload the register form.
+
+--> python manage.py runserver  
+--> Go to http://127.0.0.1:8000/register
+Notice the updated styling on the form
+
+--> View page source and notice the Bootstrap classes added to the form for styling
+
+<div id="div_id_username" class="mb-3"> <label for="id_username" class="form-label requiredField">
+                Username<span class="asteriskField">*</span> </label> <input type="text" name="username" maxlength="150" autofocus class="textinput form-control" required id="id_username"> <div id="hint_id_username" class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div> </div> <div id="div_id_email" class="mb-3"> <label for="id_email" class="form-label requiredField">
+                Email<span class="asteriskField">*</span> </label> <input type="email" name="email" maxlength="320" class="emailinput form-control" required id="id_email"> </div> <div id="div_id_password1" class="mb-3"> <label for="id_password1" class="form-label requiredField">
+                Password<span class="asteriskField">*</span> </label> <input type="password" name="password1" autocomplete="new-password" class="passwordinput form-control" required id="id_password1"> <div id="hint_id_password1" class="form-text"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></div> </div> <div id="div_id_password2" class="mb-3"> <label for="id_password2" class="form-label requiredField">
+                Password confirmation<span class="asteriskField">*</span> </label> <input type="password" name="password2" autocomplete="new-password" class="passwordinput form-control" required id="id_password2"> <div id="hint_id_password2" class="form-text">Enter the same password as before, for verification.</div> </div>
+
+The styles are implemented with the default out of the box crispy form tag.
+
+#
+#
+
+34. Fill out some test forms and notice the feedback given to the user is much clearer. 
+At this point the form is styled nicely and gives clear user validation feedback.   
+
+
+
+        
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+
+

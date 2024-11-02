@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR PERSONAL DETAILS</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Personal Details</legend>
+            <p>
+            <p>select used here:</p>
+            <label>
+                Salutation
+                <br />
+                <select name="salutation">
+                    <option>--None--</option>
+                    <option>Mr.</option>
+                    <option>Ms.</option>
+                    <option>Mrs.</option>
+                    <option>OTHER</option>
+                </select>
+            </label>
+            </p>
+            <p>
+                <label>First name: 
+                  <input name="firstName" placeholder=" first name" />
+                </label>
+            </p>
+            <p>
+              <label>Last name: 
+								<input name="lastName" placeholder=" surname" /></label>
+            </p>
+            <p>
+                Gender :
+                <label>
+                  <input type="radio" name="gender" value="male" /> Male
+                </label>
+                <label>
+                  <input type="radio" name="gender" value="female" /> Female
+                </label>
+								<label>
+                  <input type="radio" name="gender" value="shemale" /> shemale
+                </label>
+
+            </p>
+            <label Language preferred: </label>
+                <input list="lang" placeholder="datalist used here">
+                <datalist id="lang">
+                    <option value="java"></option>
+                    <option value="reactjs"></option>
+                    <option value="php"></option>
+                    <option value="python"></option>
+                </datalist>
+                <p>
+                    <label>Email:
+                       <input type="email" name="email" />
+                    </label>
+                </p>
+                <p>
+                    <label>Date of Birth:
+                       <input type="date" name="birthDate"/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                         FREETEXT  :
+                        <br />
+                        <textarea  value="1" max="100O" placeholder="progress tag used here">
+												
+
+
+                        </textarea>
+                    </label>
+                </p>
+                <p>
+                    <button type="submit">Submit</button>
+                </p>
+                <p>Progress tag used here:</p>
+                Downloading progress for your profile:
+                <progress value="1" max="1000" placeholder="progress tag used here">
+                </progress>
+        </fieldset>
+    </form>
+</body>
+
+</html>

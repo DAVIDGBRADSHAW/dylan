@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {# Set the `title` variable in each template that extends this one #}
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="toggle-LIGHT.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+#button{
+        background-color: #01a88A ;
+        color: #FFF;
+        font-size: 72px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 20px;
+        border: 20px solid rgb(214, 28, 28);
+        margin: 10px;
+        padding: 100px 15px;
+        cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+<br>
+<div class="logo">
+<img src="park-copyright.jpg" width="100"><a href="signup.html">Sign Up</a>
+
+    <h1> This will canel whole profile / account from the DAVE database</h1>
+    <h2>If you want to togo back to...</h2><nav class="navbar"><ul>
+    <a href="{{ url_for('bookings') }}">Bookings</a>
+    <a href="{{ url_for('members') }}">Members</a>
+    <a href="{{ url_for('facilities') }}">Facilities</a>
+    <a href="{{ url_for('create_booking') }}">Create Booking</a>
+                </ul>
+              <h2>then select one</h2>   
+            </nav>
+
+        <a href="signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="">SIGN IN</a>
+    <button
+    id="dark-mode-toggle"
+    class="dark-mode-toggle"
+    aria-label="toggle-dark mode"
+    > DARK / LIGHT</button>
+</div>
+
+{% set title = "Delete Post" %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1> This will canel whole profile / account from the DAVE database</h1>
+    <h2>If you want to togo back to...</h2><nav class="navbar"><ul>
+    <a href="{{ url_for('bookings') }}">Bookings</a>
+    <a href="{{ url_for('members') }}">Members</a>
+    <a href="{{ url_for('facilities') }}">Facilities</a>
+    <a href="{{ url_for('create_booking') }}">Create Booking</a>
+                </ul>
+              <h2>then select one</h2>   
+            </nav>
+
+<!-- [html-validate-disable attribute-allowed-values] -->
+ <div id="button" form action="{{ url_for('delete_action', post_id=post.id) }}" method="POST"><a href="thank_you">DELETE</a>
+</div>
+{% endblock %}
+
+    <main>
+      <h1>{{ title }}</h1>
+      {% block content %}{% endblock %}
+    </main>
+    <!--<script src="{{ url_for('static', filename='js/main.js') }}"></script>-->
+
+
+
+  <p class="subtitle"><div id="box"> 
+    <div class="statement">
+
+<br></p>  
+  <div class="btn-group"> 
+    <a href="sign_up.html" class="btn btn-accent">Sign Up</a>
+    <a href="#" class="btn btn-secondary">SIGN IN</a>
+    <a href="#" class="btn btn-third">Sign Out</a>
+
+    
+  </div>
+
+<BR>
+
+<button>
+<a href="http://www.bradshawwebsites.ie">Web Designer</a></button><p>COPYRIGHT - ALL RIGHTS REVERSED.</p>
+<br>
+<br>
+<script src="toggle-dark.js"></script>
+</body>
+</html>

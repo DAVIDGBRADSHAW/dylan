@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Cross Site Request Forgery (CSRF) token. </title>
+</head>
+<H2> DAVID BRADSHAW FRAMWORK</H2>
+
+<H3> Add a Cross Site Request Forgery (CSRF) token.</H3>
+
+<H4>This is required by Django
+and adds protection from certain attacks. If you do not have it the form will not work.
+Once this is in place we can access the form variable passed in the context of this template.
+</H4>
+<BR>
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+        </form>
+       </div>
+    {% endblock content %}
+
+#
+#
+</body>
+</html>

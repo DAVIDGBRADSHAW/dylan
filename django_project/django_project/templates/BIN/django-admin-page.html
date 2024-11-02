@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django admin page/title>
+</head>
+<body>
+
+<div class="python"><
+    python manage.py makemirgrations
+    python manage.py migrate
+    python manage.py createsuperuser
+</div>
+<br><br>
+<hr>
+<br><br>
+<div class="shortcuts">
+from django.shortcuts import render
+
+def book_list(request):
+books =['book1', 'b2', 'b3', 'b4', 'b5' ]
+return render (request, 'book_list.html', {'books': books})
+<h1> list of ../..</h1>
+<ul>
+    {% for  book in books%}
+    <li>{{}}</li>
+    {% endfor %}
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+<br>
+<hr>
+    <br>
+
+<div class="navbar-nav">
+  {% if user.is_authenticated %}
+    <a class="nav-item nav-link" href="{%url 'profile' %}"> PROFILE</a>---
+    <a class="nav-item nav-link" href=" {% url 'logout' %}">LOGOUT</a>
+  {% else %}
+    <a class="nav-item nav-link" href=" {% url 'login' %}">LOGIN</a>
+    <a class="nav-item nav-link" href=" {%url 'REGISTER'%}">REGISTER</a>
+  {% endif %}
+  <h3>the end</h3>
+<br>
+<hr>
+ <br>
+ <script src="authent"></script>   
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> UNIT 6</title>
+    <link rel="stylesheet" href="unit6a.css">
+</head>
+<body>
+<div class="code">
+    <br>
+    <br>
+    <p>
+  def register(request):
+    form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+    </p>
+<br><br>
+<hr>
+<br><br>
+<p>
+def register(request):
+    form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+    </p>
+    <br><br>
+    <hr>
+    <br><br>
+    <p>
+{% extends "blog/base.html" %}
+{% block content %}
+  
+{% endblock content %}
+<p>
+    <hr> <br><br>
+<p>
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        
+       </div>
+    {% endblock content %}
+    <br><br>
+    <hr>
+    <br><br>
+</p>
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+           
+        </form>
+       </div>
+    {% endblock content %}
+    <br><br>
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+        </form>
+       </div>
+    {% endblock content %}
+    <br><br>
+    <hr>
+    <br><br>
+
+<fieldset class="form-group"> to group related elements in the form. 
+Also add <legend class="border-bottom mb-4"> to the form. class = is used for 
+styling.
+<br><br>
+<hr>
+<br><br>
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+            </fieldset>
+       </div>
+    {% endblock content %}
+
+    <br><br>
+    <hr>
+    <br><br>
+<p>Print out the form accessing the form variable.   
+Add {{ form.as_p }} in <fieldset> as_p will load the form with <p>
+
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+                {{ form.as_p }}
+            </fieldset>
+       </div>
+    {% endblock content %}
+    <br><br>
+    <hr>
+    <br><br>
+
+<p>14. Create a submit button with some Bootstrap styling.,</p>
+<br><br>
+<hr>
+<br><br>
+    {% extends "blog/base.html" %}
+    {% block content %}
+       <div class=""content-section>
+        <form method="POST">  
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Here</legend>
+                {{ form.as_p }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline" type="submit">Sign Up</button>
+            </div>
+        </form>
+       </div>
+    {% endblock content %}
+<br><br>
+<br><br>
+<hr>
+<br><br>
+<p>
+15. Create a section on the form for signing in if a user already has an account.
+    Also adding some BootStrap classes for styling.</p>
+    <br><br>
+    <hr>
+    <br><br>
+{% extends "blog/base.html" %}
+{% block content %}
+   <div class="content-section">
+    <form method="POST">  
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Join Here</legend>
+            {{ form.as_p }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div class="border-top pt-3"
+        <small class="text-muted">
+            Already hava an account? <a class="ml-2" href="#">Sign In</a>
+        </small>
+    </div>
+   </div>
+{% endblock content %}
+<br><br>
+<hr>
+<br><br>
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('register/', user_views.register, name='register'),
+    path('',include('blog.urls')),
+]
+<br><br>
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+<br><br>
+
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages #import for messages
+<br><br>
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+<br><hr><br>
+<p>
+-> import redirect
+-> Add return redirect('blog-home')
+</p>
+<br><br>
+Updated code for views.py
+<br><br>
+<p>Create your views here.</p>
+<br><hr><br>
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blog-home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
+<br>
+<br>
+<br>
+<hr>
+<br>
+<p>21. Update blog -> templates -> blog -> base.html to show the messages.
+The code below will go inside  above the block content inside base.html</p>
+<br>
+<br>
+<hr>
+<br>
+
+<div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+        <br>
+        <br>
+        <hr>
+        <br>
+<p>
+For the code above...
+
+If Django sees flash messages sent into the template we can loop over the messages
+and print out each flash message. The <div> is using BootStrap Classes for styling.
+This part alert-{{ message.tags }} is grabbing the message tag. {{ message }} will 
+display the message
+<br>
+<br>
+<hr>
+<br>
+<p>Updated base.html...</p>
+
+<br>
+<br>
+<hr>
+<br><br
+    {% load static %}
+<p>!DOCTYPE html
+    html
+    head
+
+Required meta tags
+        meta charset="utf-8">
+        meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        Bootstrap CSS
+        link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
+
+    link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}"
+
+        {% if title %}
+            <title>Django Blog - {{ title }}</title>
+        {% else %}
+            <title>Django Blog</title>
+        {% endif %}
+    /head
+ body
+ </p>
+    <br>
+    <br>
+    <hr>
+    <br><br>
+
+<p>div class="form"
+22. Run the develpoment server and create a new user account. If the account creation is successful
+you will be redireced back to the home page and see the message success display.
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+->In the CLI run  python manage.py runserver
+</p>
+<p>-> Navigate to  http://127.0.0.1:8000/register/,</p>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+-> Create an account</p>
+<br>
+<br>
+<p>-> The flash message is only a one time alert. When you refresh the home page it will be removed.</p>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+23. The form already has some built in validation checks. Show examples of trying to create a user 
+that already exists and invalid passwords.</p>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+24. Stepping through the process of an invalid form.
+</p>
+<br>
+<br>
+<hr>
+<br><br>
+</p>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST) #New form object created with data from user
+        if form.is_valid(): #Checks take place on the form object. When false moves to else
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            <br><br></p><p>
+    else:                                   
+        form = UserCreationForm() #Form object created
+    return render(request, 'users/register.html', {'form': form}) # register.html view returned with form object</p>
+    <br>
+    <p>
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+    </p>
+    <br>
+    <p>
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+</p>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+
+Updated register.html below</p>
+<br><br>
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %} 
+<br><br>
+
+Updated here to load crispy forms
+<br><br>
+{% block content %}
+<br><br>
+<div class="word">
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                {{ form|crispy }}  Updated to load the form and let crispy take care of the formmating
+            </fieldset>
+            <br><br>       
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <br><br>     
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+            </small>
+        </div>
+    </div>
+    <br><br>  
+{% endblock content %}
+</div>
+<br>
+<hr><br>
+<br>
+<br>
+<hr>
+<br><br>
+<p>
+<div class="pass">
+<div id="div_id_username" class="mb-3"> <label for="id_username" class="form-label requiredField">Username<span class="asteriskField">*</span> </label>  
+<br><br>
+<input type="text" name="username" maxlength="100" autofocus class="textinput form-control" required id="id_username"> <div id="hint_id_username" class="form-text">Required. 100 characters or fewer. Letters, digits and @+-_ only.</div> 
+</div> 
+<br><br>
+<div id="div_id_email" class="mb-3"> 
+<label for="id_email" class="form-label requiredField">Email<span class="asteriskField">*</span> 
+</label> 
+<input type="password" name="password1" maxlength="100" autocomplete="new-password" class="passwordinput form-control" required id="id_password2">
+<br><br>
+<div id="hint_id_password2" class="form-text"><Enter the same password as before, for verification.</div> </div>
+<div id="div_id_password1" class="mb-3"> <label for="id_password1" class="form-label requiredField">Password<span class="asteriskField">*</span> </label> <input type="password" name="password1" placeholder=" max 100 characters"  autocomplete="new-password" class="passwordinput form-control" required id="id_password1"> 
+                
+<div id="hint_id_password1" class="form-text">
+    <ul>
+<li>Your password can’t be too similar to your other personal information.</li>
+        <br><br>
+<li>Your password must contain at least 8 characters.</li>
+        <br><br>
+<li>Your password can’t be a commonly used password.</li>
+        <br><br>
+<li>Your password can’t be entirely numeric.</li>
+<br><br>
+<li> english in here by the password set team</li>
+</ul>
+</div> 
+</div> 
+                <br><br>
+<div id="div_id_password2" class="mb-3"> 
+    <label for="id_password2" class="form-label requiredField">Password confirmation<span class="asteriskField">*</span> </label> 
+                <br><br>
+<input type="password" name="password2" autocomplete="new-password" class="passwordinput form-control" required id="id_password2"> <div id="hint_id_password2" class="form-text">Enter the same password as before, for verification.</div> </div>
+</div>
+<br><br>
+<input type="password" name="password2" autocomplete="new-password" class="passwordinput form-control" required id="id_password2"> <div id="hint_id_password2" class="form-text"><i> italic look
+</i>
+</div> </div>
+
+
+</p>
+<BR>
+<div class="cancel">
+<a href="index.html">CANCEL / GO BACK</a>
+</div>
+            </body>
+            </html>
+            

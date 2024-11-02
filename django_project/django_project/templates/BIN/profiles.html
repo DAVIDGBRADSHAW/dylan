@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1> USERS / TEMPLATES/ PROFILES.HTML</h1>
+{% extends "blog/base.html"%}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+			<img class="rounded-circle account-img" src="{{ user.profile.image.url}}"
+		<div class="media-body">
+			<h2 class="account-heading">{{ user.username}}</h2>
+			<p class="text-secondary">{{user.email}}</p>
+		</div>
+	</div>
+</div>
+{% endblock content%}
+
+
+<h5> the end</h5>
+</body>
+</html>

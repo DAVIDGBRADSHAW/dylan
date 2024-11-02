@@ -1,0 +1,100 @@
+{% crispy form %}<form action="submit_survey" class="blueForms" id="id-exampleForm" method="post">
+    <input name="csrfmiddlewaretoken" type="hidden" value="evU93ufHyzX5dP5h5hgOaq96zIj8c02X">
+    <div id="div_id_like_website" class="form-group">
+        <label class="requiredField"> Do you like this website?<span class="asteriskField">*</span> </label>
+        <div action="submit_survey" class="blueForms" id="id-exampleForm">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="like_website" value="1" id="id_like_website_0" required checked /> <label class="custom-control-label" for="id_like_website_0"> Yes </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="like_website" value="0" id="id_like_website_1" required /> <label class="custom-control-label" for="id_like_website_1"> No </label>
+            </div>
+        </div>
+    </div>
+    <div id="div_id_favorite_food" class="form-group">
+        <label for="id_favorite_food" class="requiredField"> What is your favorite food?<span class="asteriskField">*</span> </label>
+        <div><input type="text" name="favorite_food" maxlength="80" class="textinput inputtext form-control" required id="id_favorite_food" /></div>
+    </div>
+    <div id="div_id_favorite_color" class="form-group">
+        <label for="id_favorite_color" class="requiredField"> What is your favorite color?<span class="asteriskField">*</span> </label>
+        <div><input type="text" name="favorite_color" maxlength="80" class="textinput inputtext form-control" required id="id_favorite_color" /></div>
+    </div>
+    <div id="div_id_favorite_number" class="form-group">
+        <label for="id_favorite_number" class=""> Favorite number </label>
+        <div><input type="number" name="favorite_number" class="numberinput form-control" id="id_favorite_number" /></div>
+    </div>
+    <div id="div_id_notes" class="form-group">
+        <label for="id_notes" class=""> Additional notes or feedback </label>
+        <div><input type="text" name="notes" class="textinput inputtext form-control" id="id_notes" /></div>
+    </div>
+    <div class="form-group">
+        <div class=""><input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" /></div>
+    </div>
+</form>
+
+<form action="submit_survey" class="blueForms" id="id-exampleForm" method="post">
+    [...]
+</form><input name="csrfmiddlewaretoken" type="hidden" value="evU93ufHyzX5dP5h5hgOaq96zIj8c02X">
+<div class="form-group">
+    <div class=""><input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" /></div>
+</div>
+<br>
+<br>
+@login_required()
+def inbox(request, template_name):
+    example_form = ExampleForm()
+    redirect_url = request.GET.get('next')
+
+    # Form handling logic
+    [...]
+
+    if redirect_url is not None:
+        example_form.helper.form_action = reverse('submit_survey') + '?next=' + redirectUrl
+
+    return render_to_response(template_name, {'example_form': example_form}, context_instance=RequestContex<form action="{% url 'submit_survey' %}" class="my-class" method="post">
+    {% crispy first_form %}
+    {% crispy second_form %}
+</form>
+t(request))self.helper.form_tag = False
+
+<br>
+<br>
+.asteriskField {
+    display: none;
+}
+<br>
+<br>
+CRISPY_FAIL_SILENTLY = not DEBUG
+<br>
+<br>
+
+CRISPY_CLASS_CONVERTERS = {'textinput': "textinput inputtext"}
+<br>
+<br>
+
+from django.template.context_processors import csrf
+from crispy_forms.utils import render_crispy_form
+
+@json_view
+def save_example_form(request):
+    form = ExampleForm(request.POST or None)
+    if form.is_valid():
+        # You could actually save through AJAX and return a success code here
+        form.save()
+        return {'success': True}
+
+
+    ctx = {}
+    ctx.update(csrf(request))
+    form_html = render_crispy_form(form, context=ctx)
+    return {'success': False, 'form_html': form_html}
+    <br>
+    <br>helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-8'
+    helper.layout = Layout(
+        'email',
+        'password',
+        'remember_me',
+        StrictButton('Sign in', css_class='btn-default'),
+    )

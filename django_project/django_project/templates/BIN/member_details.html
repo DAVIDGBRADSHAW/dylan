@@ -1,0 +1,21 @@
+{% set title = "Member Details" %}
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <table>
+            <tr><td>Name:</td><td>{{ member.firstname }} {{ member.surname }}</td></tr>
+            <tr><td>Phone Number:</td><td>{{ member.telephone }}</td></tr>
+            <tr><td>Address:</td><td>{{ member.address }}</td></tr>
+            <tr><td>Zip code:</td><td>{{ member.zipcode }}</td></tr>
+            <tr><td>Join date:</td><td>{{ member.joindate }}</td></tr>
+        </table>
+    </div>
+    <h2>Bookings</h2>
+    <ul>
+        {% for booking in member.bookings %}
+            <li><a href="{{ url_for('booking_details', book_id=booking.bookid) }}">
+                {{ booking.starttime }} - {{ booking.facility.name }} - {{ booking.slots }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
